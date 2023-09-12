@@ -1,0 +1,25 @@
+VAR total_sales = SUM(Sales[Sales Amount]);
+VAR average_sale = total_sales / COUNTROWS(Sales);
+RETURN average_sale;
+VAR total_sales = SUM(
+    FILTER(
+        Sales,
+        Sales[Category] IN {"Electronics", "Apparel", "Food"}
+    )[Sales Amount]
+);
+VAR average_sale = total_sales / COUNTROWS(
+    FILTER(
+        Sales,
+        Sales[Category] IN {"Electronics", "Apparel", "Food"}
+    )
+);
+VAR margin = total_profit / total_sales;
+RETURN IF(
+    average_sale > 100,
+    "High",
+    IF(
+        average_sale > 50,
+        "Medium",
+        "Low"
+    )
+);
